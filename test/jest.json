@@ -1,0 +1,19 @@
+{
+  "rootDir": ".",
+  "roots": [
+    "<rootDir>",
+    ".."
+  ],
+  "testMatch": [
+    "<rootDir>/**/*.js"
+  ],
+  "testPathIgnorePatterns": [
+    "<rootDir>/attic"
+  ],
+  "coverageReporters": [
+    "text-summary",
+    "lcov"
+  ],
+  "bail": true,
+  "testEnvironment": "node"
+}

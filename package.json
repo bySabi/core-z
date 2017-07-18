@@ -1,0 +1,21 @@
+{
+  "name": "core-z",
+  "version": "0.0.1",
+  "description": "Core of 'z' assertion library",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "scripts": {
+    "lint": "standard --verbose | snazzy",
+    "jest": "jest --watch --config test/jest.json",
+    "test": "npm run lint && npm run jest"
+  },
+  "devDependencies": {
+    "jest-cli": "20.x.x",
+    "standard": "*",
+    "snazzy": "*"
+  },
+  "author": "z Team",
+  "license": "MIT"
+}
