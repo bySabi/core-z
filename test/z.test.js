@@ -1,10 +1,10 @@
 const z = require('..')
 const AssertCB = require('../assert-cb')
 
-// when assert
-const when = p => f => new AssertCB({p, f})
+// 'when' assert
+const when = p => f => new AssertCB(p, f)
 
-// id assert
+// 'id' assert
 const id = when(true)
 
 /* eslint-env jest */
@@ -43,7 +43,7 @@ describe('z()', () => {
     })
   })
 
- describe('z(boolean)', () => {
+  describe('z(boolean)', () => {
     [
       [true, false],
       [false]

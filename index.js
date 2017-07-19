@@ -1,22 +1,29 @@
-var utils = require('./src/utils')
-var isFunction = utils.isFunction
-var isAssertCB = utils.isAssertCB
+var AssertCB = require('./assert-cb')
 
 function z (x) {
   return function () {
-    var fns = arguments;
-    for (var i = 0, fn = fns[0]; i < fns.length;) {
-      if (!isFunction(fn)) return fn
-      var r = fn(x)               // 'r' is AssertCB type ?
-      if (!isAssertCB(r)) return r
-      var p = r.p
-      var f = r.f
-      fn = p                       // where to iterate:
-        ? f                        //  -- x (right?)
-        : fns[++i]                 // |
+    return loop(x, arguments)
+  }
+}
+
+function loop (x, fns) {
+  for (var i = 0, fn = fns[0]; i < fns.length;) {
+    if (!isFunction(fn)) return fn
+    var r = fn(x)                  // 'r' is AssertCB type ?
+    if (!isAssertCB(r)) return r
+    fn = r.p                       // where to iterate:
+      ? r.fn                       //  -- x (right?)
+      : fns[++i]                   // |
                                    // y (down?)
-    }
   }
 }
 
 module.exports = z
+
+function isFunction(x) { 
+  return typeof x === 'function'
+}
+
+function isAssertCB(x) { 
+  return x !== null && typeof x === 'object' && x[AssertCB.prototype.type]
+}
