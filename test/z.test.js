@@ -36,7 +36,7 @@ describe('z()', () => {
       it(`z('${item[0]}')(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
           x => when(/one/.test(x))(x => 1),
-          x => when(x === 'two')(2),
+          x => when(x === 'two')(2)
         )
         expect(r).toEqual(item[1])
       })
