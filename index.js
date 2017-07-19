@@ -25,5 +25,5 @@ function isFunction(x) {
 }
 
 function isAssertCB(x) { 
-  return x !== null && typeof x === 'object' && x[AssertCB.prototype.type]
+  return x && x[AssertCB.prototype.type]
 }
