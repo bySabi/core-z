@@ -1,15 +1,16 @@
-function z (x) {
+function z () {
+  var xs = arguments
   return function () {
-    return loop(x, arguments)
+    return loop(arguments, xs)
   }
 }
 
-function loop (x, fns) {
-  for (var i = 0, fn = fns[0], r; i < fns.length;) {
+function loop (fns, xs) {
+  for (var i = 0, r, fn = fns[0]; i < fns.length;) {
     if (!isFunction(fn)) return fn
-    r = fn(x)
-    // r is assertcb Type?
+    r = fn.apply(null, xs)
     if (r) {
+      // r is an assertcb Type?
       if (r._ToF_ === true) {               // where to iterate:
         fn = r.fn                           //  -- x (right?)
       } else if (r._ToF_ === false) {       // |
