@@ -12,3 +12,4 @@ AssertCB.prototype[type] = true
 AssertCB.prototype.type = type
 
 module.exports = AssertCB
+

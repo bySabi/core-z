@@ -26,3 +26,4 @@ function isFunction (x) {
 function isAssertCB (x) {
   return x && x[AssertCB.prototype.type]
 }
+
