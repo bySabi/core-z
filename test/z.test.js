@@ -1,8 +1,8 @@
 const z = require('..')
-const AssertCB = require('../assert-cb')
+const assertcb = require('../assert-cb')
 
 // 'when' assert
-const when = p => f => new AssertCB(p, f)
+const when = p => f => assertcb(p, f)
 
 // 'id' assert
 const id = when(true)
