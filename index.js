@@ -6,7 +6,10 @@ function z () {
 }
 
 function loop (fns, xs) {
-  for (var i = 0, r, fn = fns[0]; i < fns.length;) {
+  var r
+  var i = 0
+  var fn = fns[0]
+  while (i < fns.length) {
     if (!isFunction(fn)) return fn
     r = fn.apply(null, xs)
     if (r) {
