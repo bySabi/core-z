@@ -7,6 +7,12 @@ const when = p => f => assertcb(p, f)
 // 'id' assert
 const id = when(true)
 
+// 'typeOf' assert
+const typeOf = t => f => assertcb(
+  true,
+  x => assertcb(typeof x === t, f) // eslint-disable-line valid-typeof
+)
+
 /* eslint-env jest */
 describe('z()', () => {
   describe('z(numbers)', () => {
@@ -52,6 +58,23 @@ describe('z()', () => {
         const r = z(item[0])(
           x => when(x)(!x),
           x => when(!x)()
+        )
+        expect(r).toEqual(item[1])
+      })
+    })
+  })
+
+  describe('z(any)', () => {
+    [
+      ['one', 'one'],
+      [2, 'two'],
+      [true, 'any']
+    ].forEach(item => {
+      it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
+        const r = z(item[0])(
+          typeOf('string')(x => 'one'),
+          x => typeOf('number')('two'),
+          x => id('any')
         )
         expect(r).toEqual(item[1])
       })
