@@ -10,16 +10,15 @@ function loop (fs, xs) {
   var i = 0
   var f = fs[0]
   while (i < fs.length) {
-    if (!isFunction(f)) return f
-    r = f.apply(null, xs)
-    if (r) {
-      // r is an assertcb Type?
-      if (r._ToF_ === true) {               // where to iterate:
-        f = r.fn                           //  -- x (right?)
-      } else if (r._ToF_ === false) {       // |
-        f = fs[++i]                       // y (down?)
-      } else return r
-    } else return r
+    if (f) {
+      if (f._ToF_ === true) {
+        f = f.fn
+      } else if (f._ToF_ === false) {
+        f = fs[++i]
+      } else if (isFunction(f)) {
+        f = f.apply(null, xs)
+      } else return f
+    } else return f
   }
 }
 
