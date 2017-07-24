@@ -72,7 +72,8 @@ describe('z()', () => {
     ].forEach(item => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          typeOf('string')(x => 'one'),
+          typeOf('string')(x => f => 'one'),
+        //  typeOf('string')(x => 'one'),
           x => typeOf('number')('two'),
           x => id('any')
         )
