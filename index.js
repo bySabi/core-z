@@ -9,6 +9,7 @@ function loop (fs, xs) {
   var r
   var i = 0
   var f = fs[0]
+  /*
   while (i < fs.length) {
     if (f) {
       if (f._ToF_ === true) {
@@ -20,7 +21,30 @@ function loop (fs, xs) {
       } else return f
     } else return f
   }
+*/
+  while (i < fs.length) {
+    if (!f) return f
+    switch (true) {
+      case f._ToF_:
+        f = f.fn
+        break
+      case !f._ToF_:
+        f = fs[++i]
+        break
+      case isFunction(f):
+        f = f.apply(null, xs)
+        break
+      default:
+        return f
+      }
+    }
+  }
+
+
 }
+
+
+
 
 module.exports = z
 
