@@ -1,17 +1,14 @@
 const z = require('..')
-const assertcb = require('../assert-cb')
+const createAssertFn = require('../assert-fn')
+
+ // 'id' assert
+const id = z.id
 
 // 'when' assert
-const when = p => f => assertcb(p, f)
-
-// 'id' assert
-const id = when(true)
+const when = createAssertFn(([p]) => p)
 
 // 'typeOf' assert
-const typeOf = t => f => assertcb(
-  true,
-  x => assertcb(typeof x === t, f) // eslint-disable-line valid-typeof
-)
+const typeOf = createAssertFn(([t], x) => typeof x === t) // eslint-disable-line valid-typeof
 
 /* eslint-env jest */
 describe('z()', () => {
@@ -24,10 +21,10 @@ describe('z()', () => {
     ].forEach(item => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          x => when(x === 1)(x => 'one'),
-          x => when(x > 1 && x < 3)('two'),
-          x => when(x === 3 && typeof x === 'number')(x => `${x}`),
-          x => id('any')
+          x => when(x === 1)/* -> */('one'),
+          x => when(x > 1 && x < 3)/* -> */('two'),
+          x => when(x === 3 && typeof x === 'number')/* -> */('3'),
+          x => id/* -> */('any')
         )
         expect(r).toEqual(item[1])
       })
@@ -41,8 +38,8 @@ describe('z()', () => {
     ].forEach(item => {
       it(`z('${item[0]}')(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          x => when(/one/.test(x))(x => 1),
-          x => when(x === 'two')(2)
+          x => when(/one/.test(x))/* -> */(1),
+          x => when(x === 'two')/* -> */(2)
         )
         expect(r).toEqual(item[1])
       })
@@ -56,8 +53,8 @@ describe('z()', () => {
     ].forEach(item => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          x => when(x)(!x),
-          x => when(!x)()
+          x => when(x)/* -> */(!x),
+          x => when(!x)/* -> */()
         )
         expect(r).toEqual(item[1])
       })
@@ -72,10 +69,10 @@ describe('z()', () => {
     ].forEach(item => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          typeOf('string')(x => f => 'one'),
+          typeOf('string')/* -> */('one'),
         //  typeOf('string')(x => 'one'),
-          x => typeOf('number')('two'),
-          x => id('any')
+          x => typeOf('number')/* -> */('two'),
+          id/* -> */('any')
         )
         expect(r).toEqual(item[1])
       })
