@@ -1,20 +1,19 @@
 var ASSERTFN = require('./assert-fn').ASSERTFN
 
-function z () {
-  var xs = arguments
+function z (x) {
   return function () {
-    return loop(arguments, xs)
+    return loop(arguments, x)
   }
 }
 
-function loop (fs, xs) {
+function loop (fs, x) {
   for (var i = 0, f, _f; i < fs.length; i++) {
     f = _f = fs[i]
     if (f.name !== ASSERTFN) {
-      f = f.apply(null, xs)
+      f = f(x)
       if (f.name !== ASSERTFN) throw new Error(_f.toString() + ' is not a assertFn')
     }
-    f = f.apply(null, xs)
+    f = f(x)
     if (f.hasValue) return f.value
   }
 }
