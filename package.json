@@ -1,6 +1,6 @@
 {
   "name": "core-z",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Core of 'z' assertion library",
   "main": "index.js",
   "engines": {

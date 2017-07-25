@@ -14,9 +14,9 @@ function loop (fs, xs) {
     i < fs.length;
     i++, f = _f = fs[i]
   ) {
-    if (!f[ASSERTFN]) {
+    if (f.name !== ASSERTFN) {
       f = f.apply(null, xs)
-      if (!f[ASSERTFN]) throw new Error(_f.toString() + ' is not a assertFn')
+      if (f.name !== ASSERTFN) throw new Error(_f.toString() + ' is not a assertFn')
     }
     f = f.apply(null, xs)
     if (f.hasValue) return f.value
