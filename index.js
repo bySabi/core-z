@@ -1,5 +1,4 @@
 var ASSERTFN = require('./assert-fn').ASSERTFN
-var id = require('./src/id')
 
 function z () {
   var xs = arguments
@@ -23,6 +22,6 @@ function loop (fs, xs) {
   }
 }
 
-z.id = id
+z.id = require('./src/id')
 
 module.exports = z
