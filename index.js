@@ -8,11 +8,8 @@ function z () {
 }
 
 function loop (fs, xs) {
-  for (
-    var i = 0, _f, f = _f = fs[0];
-    i < fs.length;
-    i++, f = _f = fs[i]
-  ) {
+  for (var i = 0, f, _f; i < fs.length; i++) {
+    f = _f = fs[i]
     if (f.name !== ASSERTFN) {
       f = f.apply(null, xs)
       if (f.name !== ASSERTFN) throw new Error(_f.toString() + ' is not a assertFn')
