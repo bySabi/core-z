@@ -5,24 +5,24 @@ const createAssertFn = require('../assert-fn')
 const id = z.id
 
 // 'when' assert
-const when = createAssertFn(([p]) => p)
+const when = createAssertFn(([p], x) => [p, x])
 
 // 'typeOf' assert
-const typeOf = createAssertFn(([t], x) => typeof x === t) // eslint-disable-line valid-typeof
+const typeOf = createAssertFn(([t], x) => [typeof x === t]) // eslint-disable-line valid-typeof
 
 /* eslint-env jest */
 describe('z()', () => {
   describe('z(numbers)', () => {
     [
       [1, 'one'],
-      [2, 'two'],
+      [2, 2],
       [3, '3'],
       [4, 'any']
     ].forEach(item => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
-          x => when(x === 1)/* -> */('one'),
-          x => when(x > 1 && x < 3)/* -> */('two'),
+          x => when(x === 1)/* -> */(x => 'one'),
+          x => when(x > 1 && x < 3)/* -> */(a => a),
           x => when(x === 3 && typeof x === 'number')/* -> */('3'),
           x => id/* -> */('any')
         )
@@ -70,7 +70,6 @@ describe('z()', () => {
       it(`z(${item[0]})(...asserts) -> ${item[1]}`, () => {
         const r = z(item[0])(
           typeOf('string')/* -> */('one'),
-        //  typeOf('string')(x => 'one'),
           x => typeOf('number')/* -> */('two'),
           id/* -> */('any')
         )
